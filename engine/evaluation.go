@@ -1,8 +1,8 @@
 package model
 
 import (
-	"regexp"
 	"encoding/json"
+	"regexp"
 )
 
 type operation int
@@ -22,7 +22,7 @@ type basicRule struct {
 }
 
 func newBasicRule(pattern string) basicRule {
-	return basicRule {
+	return basicRule{
 		pattern: pattern,
 	}
 }
@@ -38,10 +38,10 @@ type compositeRule struct {
 }
 
 func newCompositeRule(op operation, rules []Rule) compositeRule {
-	return compositeRule {
-		op: op,
+	return compositeRule{
+		op:    op,
 		rules: rules,
-	}	
+	}
 }
 
 func (rule compositeRule) evaluate(event string, context string) bool {
@@ -71,11 +71,11 @@ func (rule compositeRule) evaluate(event string, context string) bool {
 	return false
 }
 
-//Warning. Here be disgusting json parsing.
+// Warning. Here be disgusting json parsing.
 func buildRuleFromJson(input string) Rule {
 	var rawResult map[string]interface{}
-	json.Unmarshal([]byte(input), &rawResult) 
-	return buildRuleFromUnmarshalledObject(rawResult) 
+	json.Unmarshal([]byte(input), &rawResult)
+	return buildRuleFromUnmarshalledObject(rawResult)
 }
 
 func buildRuleFromUnmarshalledObject(rawResult map[string]interface{}) Rule {
@@ -89,12 +89,12 @@ func buildRuleFromUnmarshalledObject(rawResult map[string]interface{}) Rule {
 	}
 	op := NOT
 	switch rawResult["operation"].(string) {
-		case "not":
-			op = NOT
-		case "and":
-			op = AND
-		case "or":
-			op = OR
+	case "not":
+		op = NOT
+	case "and":
+		op = AND
+	case "or":
+		op = OR
 	}
 	return newCompositeRule(op, rules)
 }

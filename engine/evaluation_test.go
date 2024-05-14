@@ -5,7 +5,7 @@ import (
 )
 
 func TestBuildBasicRuleFromJson(t *testing.T) {
-	input := "{\"pattern\": \"[0-9]\"}"	
+	input := "{\"pattern\": \"[0-9]\"}"
 	genericRule := buildRuleFromJson(input)
 	rule, ok := genericRule.(basicRule)
 	if !ok {
@@ -17,7 +17,7 @@ func TestBuildBasicRuleFromJson(t *testing.T) {
 }
 
 func TestBuildCompositeRuleFromJson(t *testing.T) {
-	input := "{\"operation\": \"and\",\"rules\": [{\"pattern\": \"[0-9]\"}, {\"pattern\": \"[a-z]\"}]}"	
+	input := "{\"operation\": \"and\",\"rules\": [{\"pattern\": \"[0-9]\"}, {\"pattern\": \"[a-z]\"}]}"
 	genericRule := buildRuleFromJson(input)
 	rule, ok := genericRule.(compositeRule)
 	if !ok {
